@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
@@ -20,11 +22,16 @@ import webonise.mapboxdemo.utilities.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final float ZOOM_DEFAULT = 15.0f;
     private MapboxMap mapboxMap;
     private MapView mapview;
     private boolean hasInternetPermission;
 
     final List<LatLng> latLngPolygon = new ArrayList<>();
+    private LatLng myLoc = new LatLng();{
+        myLoc.setLatitude(18.515600);
+        myLoc.setLongitude(73.781900);
+    }
 
     {
         latLngPolygon.add(new LatLng(28.6139, 77.2090));//delhi
@@ -82,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void initMapBox(MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
         Toast.makeText(MainActivity.this, "Map box object initialized", Toast.LENGTH_SHORT).show();
+        CameraPosition.Builder b = new CameraPosition.Builder();
+        b.target(new LatLng(myLoc.getLatitude(), myLoc.getLongitude()));
+        b.zoom(ZOOM_DEFAULT);
+        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(b.build()), 1000);
     }
 
     /**

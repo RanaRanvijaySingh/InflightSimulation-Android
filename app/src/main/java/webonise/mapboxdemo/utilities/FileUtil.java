@@ -111,12 +111,12 @@ public class FileUtil {
         String fileContent = readFromFile();
         final List<LatLng> latLngPolygon = new ArrayList<>();
         {
-            latLngPolygon.add(new LatLng(28.6139, 77.2090));//delhi
-            latLngPolygon.add(new LatLng(22.2587, 71.1924));//gujarat
-            latLngPolygon.add(new LatLng(18.5204, 73.8567));//pune
-            latLngPolygon.add(new LatLng(12.9716, 77.5946));//banglore
-            latLngPolygon.add(new LatLng(25.5941, 85.1376));//patna
-            latLngPolygon.add(new LatLng(28.6139, 77.2090));//delhi
+            latLngPolygon.add(new LatLng(18.515600, 73.781900));//Bhavdan
+            latLngPolygon.add(new LatLng(18.517600, 73.781900));//Bhavdan
+            latLngPolygon.add(new LatLng(18.517600, 73.782900));//Bhavdan
+            latLngPolygon.add(new LatLng(18.515600, 73.782900));//Bhavdan
+            latLngPolygon.add(new LatLng(18.515600, 73.781900));//Bhavdan
+
         }
         return latLngPolygon;
     }

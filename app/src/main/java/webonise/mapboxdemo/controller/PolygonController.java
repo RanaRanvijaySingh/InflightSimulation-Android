@@ -71,7 +71,6 @@ public class PolygonController {
         }
     }
 
-
     /**
      * Function to clear polygon every time a new one is drawn
      */
