@@ -2,6 +2,7 @@ package webonise.mapboxdemo.controller;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.mapbox.mapboxsdk.annotations.Polygon;
 import com.mapbox.mapboxsdk.annotations.PolygonOptions;
@@ -19,6 +20,7 @@ import webonise.mapboxdemo.utilities.FileUtil;
 public class PolygonController {
     private static final float POLYGON_FILL_ALPHA = 0.2f;
     private static final int POLYGON_LINE_WIDTH = 1;
+    private static final String TAG = "PolygonController";
     private final MapboxMap mMapboxMap;
     private final MainActivity mActivity;
     private Polygon mPolygon;
@@ -39,7 +41,10 @@ public class PolygonController {
     public void drawPolygon() {
         FileUtil fileUtil = new FileUtil(mActivity);
         List<LatLng> poly = fileUtil.getPolygonPoints();
-        drawPolygon(poly, 0);
+        Log.i(TAG,"Polygon point obtained");
+        if (poly != null) {
+            drawPolygon(poly, 0);
+        }
     }
 
     /**
@@ -68,6 +73,7 @@ public class PolygonController {
             mPolygonOutline = mMapboxMap.addPolyline(lOpts);
             //Create buffered polygon using current polygon points
             drawBufferedPolygon(poly, altitude);
+            Log.i(TAG,"Polygon, buffered polygon drawn Drawn");
         }
     }
 

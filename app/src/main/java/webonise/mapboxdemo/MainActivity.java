@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webonise.mapboxdemo.controller.SimulationController;
+import webonise.mapboxdemo.utilities.FileUtil;
 import webonise.mapboxdemo.utilities.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,7 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean hasInternetPermission;
 
     final List<LatLng> latLngPolygon = new ArrayList<>();
-    private LatLng myLoc = new LatLng();{
+    private LatLng myLoc = new LatLng();
+    private boolean hasFileWritePermission;
+
+    {
         myLoc.setLatitude(18.515600);
         myLoc.setLongitude(73.781900);
     }
@@ -59,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 hasInternetPermission = true;
             }
         }, "Need INTERNET permission.");
+        permissionUtil.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionUtil
+                .OnPermissionGranted() {
+            @Override
+            public void permissionGranted() {
+                hasFileWritePermission = true;
+            }
+        }, "Need Storage permission.");
+
     }
 
     /**
@@ -100,7 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initializeComponents() {
         Button bReplay = (Button) findViewById(R.id.bReplay);
+        Button bCreateFile = (Button) findViewById(R.id.bCreateFile);
         bReplay.setOnClickListener(this);
+        bCreateFile.setOnClickListener(this);
     }
 
     @Override
@@ -108,6 +122,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.bReplay:
                 startSimulation();
+                break;
+            case R.id.bCreateFile:
+                FileUtil fileUtil = new FileUtil(this);
+                fileUtil.writeToFile();
                 break;
         }
     }
