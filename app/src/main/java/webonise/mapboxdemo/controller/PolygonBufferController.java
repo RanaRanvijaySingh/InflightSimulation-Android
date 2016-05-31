@@ -1,5 +1,6 @@
 package webonise.mapboxdemo.controller;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -12,14 +13,13 @@ import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.MainActivity;
 import webonise.mapboxdemo.utilities.Constants;
 
 public class PolygonBufferController {
-    private final MainActivity mActivity;
+    private final Activity mActivity;
     private final GeometryFactory mGeometryFactory;
 
-    public PolygonBufferController(MainActivity mainActivity) {
+    public PolygonBufferController(Activity mainActivity) {
         this.mActivity = mainActivity;
         //Initialize geometry factory object to get Geometry object.
         mGeometryFactory = new GeometryFactory();

@@ -5,13 +5,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.precisionhawk.inflightmobile.log.FlightLogger;
-import com.precisionhawk.inflightmobile.model.CameraProperties;
-import com.precisionhawk.inflightmobile.model.FlightPlanParams;
-import com.precisionhawk.inflightmobile.util.GeoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import webonise.mapboxdemo.models.CameraProperties;
+import webonise.mapboxdemo.models.FlightPlanParams;
+import webonise.mapboxdemo.utilities.GeoUtils;
 
 /*
     Band Pass Transect Generation Strategy
@@ -30,10 +30,12 @@ public class BandPassTransectGenerationStrategy extends TransectGenerationStrate
     private static double MIN_LON_INIT = 180.0; // initialize min lon at max value
     private static double MAX_LON_INIT = -180.0; // initialize max lon at min value
 
-    public BandPassTransectGenerationStrategy() {}
+    public BandPassTransectGenerationStrategy() {
+    }
 
     @Override
-    public List<LatLng> generateTransects(List<LatLng> flightArea, FlightPlanParams params, CameraProperties cameraProps, Context c) {
+    public List<LatLng> generateTransects(List<LatLng> flightArea, FlightPlanParams params,
+                                          CameraProperties cameraProps, Context c) {
         // 0: Define the waypoint list
         List<LatLng> result = new ArrayList<LatLng>();
         boolean transectSwitch = true; // determines order to add waypoints (back and forth)
@@ -46,9 +48,9 @@ public class BandPassTransectGenerationStrategy extends TransectGenerationStrate
         // 1: calculate margins for images (basically, distance separating images)
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c.getApplicationContext());
         int hOverlap = Integer.valueOf(sp.getString("h_overlap", Integer.toString(FlightPlanParams.DEFAULT_H_OVERLAP)));
-        double marginAcross = (1 - (((double) hOverlap)/100)) * cameraProps.getFieldOfView(params.getAlt())[CameraProperties.INDEX_FOV_HORIZONTAL];
+        double marginAcross = (1 - (((double) hOverlap) / 100)) * cameraProps.getFieldOfView(params.getAlt())[CameraProperties.INDEX_FOV_HORIZONTAL];
         int vOverlap = Integer.valueOf(sp.getString("v_overlap", Integer.toString(FlightPlanParams.DEFAULT_V_OVERLAP)));
-        double marginAlong = (1 - (((double) vOverlap)/100)) * cameraProps.getFieldOfView(params.getAlt())[CameraProperties.INDEX_FOV_VERTICAL];
+        double marginAlong = (1 - (((double) vOverlap) / 100)) * cameraProps.getFieldOfView(params.getAlt())[CameraProperties.INDEX_FOV_VERTICAL];
 
         // 1b: buffer polygon to get area outside
         //flightArea = bufferPolygon(flightArea, marginAlong);
@@ -77,7 +79,7 @@ public class BandPassTransectGenerationStrategy extends TransectGenerationStrate
         LatLng trackPt = new LatLng(maxLat, maxLon);
         List<Edge> edgeList = new ArrayList<Edge>();
         for (int i = 0; i < flightArea.size(); i++) {
-            Edge e = new Edge(flightArea.get(i), flightArea.get((i+1) % flightArea.size()));
+            Edge e = new Edge(flightArea.get(i), flightArea.get((i + 1) % flightArea.size()));
             edgeList.add(e);
         }
 
@@ -89,9 +91,7 @@ public class BandPassTransectGenerationStrategy extends TransectGenerationStrate
             trackPt = GeoUtils.destPoint(trackPt, GeoUtils.BEARING_SOUTH, marginAcross / 2);
 
             // start doing bandpasses
-            FlightLogger.i(TAG, "starting transect loop");
             while (trackPt.getLatitude() > minLat) {
-                FlightLogger.i(TAG, "latitude: " + trackPt.getLatitude());
                 // find waypoints
                 BandData bandWpts = findBandDataAtLatitude(edgeList, trackPt.getLatitude());
 
@@ -114,9 +114,7 @@ public class BandPassTransectGenerationStrategy extends TransectGenerationStrate
             trackPt = GeoUtils.destPoint(trackPt, GeoUtils.BEARING_WEST, marginAcross / 2);
 
             // start doing bandpasses
-            FlightLogger.i(TAG, "starting transect loop");
             while (trackPt.getLongitude() > minLon) {
-                FlightLogger.i(TAG, "longitude: " + trackPt.getLongitude());
                 // find waypoints
                 BandData bandWpts = findBandDataAtLongitude(edgeList, trackPt.getLongitude());
 
@@ -231,7 +229,8 @@ public class BandPassTransectGenerationStrategy extends TransectGenerationStrate
         private double max;
         private BandType bandType;
 
-        private BandData() {}
+        private BandData() {
+        }
 
         private BandData(double min, double max, BandType bt) {
             this.min = min;
