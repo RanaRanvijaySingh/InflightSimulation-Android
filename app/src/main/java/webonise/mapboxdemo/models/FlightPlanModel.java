@@ -9,6 +9,7 @@ public class FlightPlanModel {
     private List<LatLng> pointList;
     private LatLng homeLocation;
     private boolean isBufferEnabled;
+    private List<LatLng> transectsList;
 
     public int getType() {
         return type;
@@ -40,5 +41,13 @@ public class FlightPlanModel {
 
     public void setBufferEnabled(boolean bufferEnabled) {
         isBufferEnabled = bufferEnabled;
+    }
+
+    public List<LatLng> getTransectsList() {
+        return transectsList;
+    }
+
+    public void setTransectsList(List<LatLng> transectsList) {
+        this.transectsList = transectsList;
     }
 }

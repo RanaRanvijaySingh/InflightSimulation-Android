@@ -5,9 +5,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.mapbox.mapboxsdk.geometry.LatLng;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import webonise.mapboxdemo.MainActivity;
 import webonise.mapboxdemo.models.FlightPlanModel;
@@ -60,21 +55,7 @@ public class FileUtil {
     }
 
     private String getFileContent() {
-        FlightPlanModel flightPlanModel = new FlightPlanModel();
-        final List<LatLng> latLngPolygon = new ArrayList<>();
-        {
-            latLngPolygon.add(new LatLng(18.515600, 73.781900));//Bhavdan
-            latLngPolygon.add(new LatLng(18.517600, 73.781900));//Bhavdan
-            latLngPolygon.add(new LatLng(18.517600, 73.782900));//Bhavdan
-            latLngPolygon.add(new LatLng(18.515600, 73.782900));//Bhavdan
-            latLngPolygon.add(new LatLng(18.515600, 73.781900));//Bhavdan
-
-        }
-        flightPlanModel.setType(Constants.ClassType.FLIGHT_PLAN);
-        flightPlanModel.setPointList(latLngPolygon);
-        flightPlanModel.setBufferEnabled(true);
-        flightPlanModel.setHomeLocation(new LatLng(18.515600, 73.781900));
-        return new Gson().toJson(flightPlanModel);
+        return "{\"type\":0,\"homeLocation\":{\"altitude\":0.0,\"latitude\":18.5156,\"longitude\":73.7819},\"isBufferEnabled\":true,\"pointList\":[{\"altitude\":0.0,\"latitude\":18.5156,\"longitude\":73.7819},{\"altitude\":0.0,\"latitude\":18.5176,\"longitude\":73.7819},{\"altitude\":0.0,\"latitude\":18.5176,\"longitude\":73.7829},{\"altitude\":0.0,\"latitude\":18.5156,\"longitude\":73.7829},{\"altitude\":0.0,\"latitude\":18.5156,\"longitude\":73.7819}],\"transectsList\":[{\"altitude\":0.0,\"latitude\":18.515363689673244,\"longitude\":73.7834543143793},{\"altitude\":0.0,\"latitude\":18.517956957888817,\"longitude\":73.7834543143793},{\"altitude\":0.0,\"latitude\":18.518088098273576,\"longitude\":73.78325947148679},{\"altitude\":0.0,\"latitude\":18.51524957785906,\"longitude\":73.78325947148679},{\"altitude\":0.0,\"latitude\":18.51523282201783,\"longitude\":73.78306462859427},{\"altitude\":0.0,\"latitude\":18.51810149061056,\"longitude\":73.78306462859427},{\"altitude\":0.0,\"latitude\":18.51810021642835,\"longitude\":73.78286978570176},{\"altitude\":0.0,\"latitude\":18.515223033531615,\"longitude\":73.78286978570176},{\"altitude\":0.0,\"latitude\":18.5152132450454,\"longitude\":73.78267494280925},{\"altitude\":0.0,\"latitude\":18.518098942246144,\"longitude\":73.78267494280925},{\"altitude\":0.0,\"latitude\":18.518097668063934,\"longitude\":73.78248009991674},{\"altitude\":0.0,\"latitude\":18.515203456559185,\"longitude\":73.78248009991674},{\"altitude\":0.0,\"latitude\":18.51519366807297,\"longitude\":73.78228525702423},{\"altitude\":0.0,\"latitude\":18.518096393881727,\"longitude\":73.78228525702423},{\"altitude\":0.0,\"latitude\":18.518095119699517,\"longitude\":73.78209041413172},{\"altitude\":0.0,\"latitude\":18.515183879586758,\"longitude\":73.78209041413172},{\"altitude\":0.0,\"latitude\":18.515174091100544,\"longitude\":73.7818955712392},{\"altitude\":0.0,\"latitude\":18.51809384551731,\"longitude\":73.7818955712392},{\"altitude\":0.0,\"latitude\":18.51805534363307,\"longitude\":73.78170072834669},{\"altitude\":0.0,\"latitude\":18.51519520436081,\"longitude\":73.78170072834669},{\"altitude\":0.0,\"latitude\":18.515356105610167,\"longitude\":73.78150588545417},{\"altitude\":0.0,\"latitude\":18.51782951616352,\"longitude\":73.78150588545417}]}\n";
     }
 
     @NonNull
@@ -129,27 +110,13 @@ public class FileUtil {
     /**
      * Function to get list of polygon points
      *
-     * @return List<LatLng>
-     */
-    public List<LatLng> getPolygonPoints() {
-        FlightPlanModel flightPlanModel = getFlightPlan();
-        Log.i(TAG,"Flight plan object obtained");
-        if (flightPlanModel != null){
-            return flightPlanModel.getPointList();
-        }
-        return null;
-    }
-
-    /**
-     * Function to get flight plan from the file
-     *
      * @return FlightPlanModel
      */
-    private FlightPlanModel getFlightPlan() {
+    public FlightPlanModel getFlightPlanModel() {
         String fileContent = readFromFile();
-        Log.i(TAG,fileContent);
+        Log.i(TAG, fileContent);
         String jsonContent = getJsonContent(fileContent);
-        Log.i(TAG,"Converted to json content > "+jsonContent);
+        Log.i(TAG, "Converted to json content > " + jsonContent);
         return CustomJsonParser.fromJson(jsonContent);
     }
 

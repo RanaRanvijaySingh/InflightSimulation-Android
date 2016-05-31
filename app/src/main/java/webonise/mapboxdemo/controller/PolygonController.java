@@ -16,6 +16,7 @@ import java.util.List;
 
 import webonise.mapboxdemo.MainActivity;
 import webonise.mapboxdemo.R;
+import webonise.mapboxdemo.models.FlightPlanModel;
 import webonise.mapboxdemo.utilities.FileUtil;
 
 public class PolygonController {
@@ -44,16 +45,11 @@ public class PolygonController {
      */
     public void drawPolygon() {
         FileUtil fileUtil = new FileUtil(mActivity);
-        final List<LatLng> poly = fileUtil.getPolygonPoints();
+        FlightPlanModel flightPlanModel = fileUtil.getFlightPlanModel();
         Log.i(TAG, "Polygon point obtained");
-        if (poly != null) {
-            drawPolygon(poly, 0);
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    drawTransects(poly);
-                }
-            });
+        if (flightPlanModel != null) {
+            drawPolygon(flightPlanModel.getPointList(), 0);
+            drawTransects(flightPlanModel.getTransectsList());
         }
     }
 
@@ -134,21 +130,11 @@ public class PolygonController {
     }
 
     /**
-     * Function to draw transects
-     *
-     * @param latLngList List<LatLng>
-     */
-    private void drawTransects(List<LatLng> latLngList) {
-        TransectsController transectsController = new TransectsController(mActivity);
-        drawTransectsOnMap(transectsController.getTransectsPoints(latLngList));
-    }
-
-    /**
      * Function to draw transects using given lat lng list
      *
      * @param transects List<LatLng>
      */
-    public void drawTransectsOnMap(List<LatLng> transects) {
+    public void drawTransects(List<LatLng> transects) {
         this.transects = transects;
         if (mPolyline != null) {
             mPolyline.remove();
@@ -156,9 +142,10 @@ public class PolygonController {
         PolylineOptions opts = new PolylineOptions();
         opts.color(mActivity.getResources().getColor(R.color.transect_stroke));
         opts.width(TRANSECT_LINE_WIDTH);
-        for (int i = 0; i < transects.size(); i++) {
-            opts.add(transects.get(i));
-        }
+//        for (int i = 0; i < transects.size(); i++) {
+//            opts.add(transects.get(i));
+//        }
+        opts.add(transects.toArray(new LatLng[transects.size()]));
         mPolyline = mMapboxMap.addPolyline(opts);
     }
 }
