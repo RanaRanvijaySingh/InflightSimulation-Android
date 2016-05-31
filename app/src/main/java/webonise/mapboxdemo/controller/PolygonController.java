@@ -41,9 +41,10 @@ public class PolygonController {
     public void drawPolygon() {
         FileUtil fileUtil = new FileUtil(mActivity);
         List<LatLng> poly = fileUtil.getPolygonPoints();
-        Log.i(TAG,"Polygon point obtained");
+        Log.i(TAG, "Polygon point obtained");
         if (poly != null) {
             drawPolygon(poly, 0);
+            drawTransects(poly);
         }
     }
 
@@ -73,7 +74,7 @@ public class PolygonController {
             mPolygonOutline = mMapboxMap.addPolyline(lOpts);
             //Create buffered polygon using current polygon points
             drawBufferedPolygon(poly, altitude);
-            Log.i(TAG,"Polygon, buffered polygon drawn Drawn");
+            Log.i(TAG, "Polygon, buffered polygon drawn Drawn");
         }
     }
 
@@ -109,7 +110,6 @@ public class PolygonController {
         return null;
     }
 
-
     /**
      * Function to get points array from the list
      *
@@ -122,5 +122,15 @@ public class PolygonController {
             return listBufferedPoints.toArray(new LatLng[listBufferedPoints.size()]);
         }
         return new LatLng[0];
+    }
+
+    /**
+     * Function to draw transects
+     *
+     * @param latLngList List<LatLng>
+     */
+    private void drawTransects(List<LatLng> latLngList) {
+        TransectsController transectsController = new TransectsController(mActivity);
+        transectsController.getTransectsPoints(latLngList);
     }
 }
