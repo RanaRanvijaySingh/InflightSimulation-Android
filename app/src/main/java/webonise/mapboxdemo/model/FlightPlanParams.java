@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.models;
+package webonise.mapboxdemo.model;
 
 /**
  * This class is meant to contain the settings that a new flight plan can be cloned

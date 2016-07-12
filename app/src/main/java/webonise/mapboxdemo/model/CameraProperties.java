@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.models;
+package webonise.mapboxdemo.model;
 
 import android.content.Context;
 import android.util.Log;

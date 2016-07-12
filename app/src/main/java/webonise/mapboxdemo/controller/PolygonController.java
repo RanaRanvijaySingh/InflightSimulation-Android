@@ -4,6 +4,10 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.mapbox.mapboxsdk.annotations.Icon;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
+import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.annotations.Polygon;
 import com.mapbox.mapboxsdk.annotations.PolygonOptions;
 import com.mapbox.mapboxsdk.annotations.Polyline;
@@ -14,10 +18,9 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.MainActivity;
 import webonise.mapboxdemo.R;
-import webonise.mapboxdemo.models.FlightPlanModel;
-import webonise.mapboxdemo.utilities.FileUtil;
+import webonise.mapboxdemo.model.FlightPlanModel;
+import webonise.mapboxdemo.view.MainActivity;
 
 public class PolygonController {
     public static final int TRANSECT_LINE_WIDTH = 2;
@@ -33,6 +36,7 @@ public class PolygonController {
     private List<LatLng> aoiBuffered = new ArrayList<LatLng>();
     private List<LatLng> transects;
     private Polyline mPolyline;
+    private Marker mHomeMarker;
 
     public PolygonController(MainActivity activity, MapboxMap mapboxMap) {
         this.mActivity = activity;
@@ -42,14 +46,15 @@ public class PolygonController {
 
     /**
      * Function to draw polygon
+     * @param flightPlanModel
      */
-    public void drawPolygon() {
-        FileUtil fileUtil = new FileUtil(mActivity);
-        FlightPlanModel flightPlanModel = fileUtil.getFlightPlanModel();
+    public void initializeMissionBase(FlightPlanModel flightPlanModel) {
         Log.i(TAG, "Polygon point obtained");
         if (flightPlanModel != null) {
             drawPolygon(flightPlanModel.getPointList(), 0);
             drawTransects(flightPlanModel.getTransectsList());
+            drawDroneIcon(flightPlanModel.getHomeLocation());
+            drawHomeIcon(flightPlanModel.getHomeLocation());
         }
     }
 
@@ -142,10 +147,39 @@ public class PolygonController {
         PolylineOptions opts = new PolylineOptions();
         opts.color(mActivity.getResources().getColor(R.color.transect_stroke));
         opts.width(TRANSECT_LINE_WIDTH);
-//        for (int i = 0; i < transects.size(); i++) {
-//            opts.add(transects.get(i));
-//        }
         opts.add(transects.toArray(new LatLng[transects.size()]));
         mPolyline = mMapboxMap.addPolyline(opts);
+    }
+
+    /**
+     * Function to draw home icon on the map
+     *
+     * @param homeLocation LatLng
+     */
+    private void drawHomeIcon(LatLng homeLocation) {
+        final Icon homeIcon = IconFactory.getInstance(mActivity).fromDrawable(
+                mActivity.getResources().getDrawable(R.drawable.homemarker));
+        if (mMapboxMap != null) {
+            MarkerOptions homeOpts = new MarkerOptions();
+            homeOpts.position(homeLocation);
+            homeOpts.icon(homeIcon);
+            mHomeMarker = mMapboxMap.addMarker(homeOpts);
+        }
+    }
+
+    /**
+     * Function to draw home icon on the map
+     *
+     * @param homeLocation LatLng
+     */
+    private void drawDroneIcon(LatLng homeLocation) {
+        final Icon droneIcon = IconFactory.getInstance(mActivity).fromDrawable(
+                mActivity.getResources().getDrawable(R.drawable.quad_marker));
+        if (mMapboxMap != null) {
+            MarkerOptions droneOpt = new MarkerOptions();
+            droneOpt.position(homeLocation);
+            droneOpt.icon(droneIcon);
+            mHomeMarker = mMapboxMap.addMarker(droneOpt);
+        }
     }
 }

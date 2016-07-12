@@ -1,4 +1,4 @@
-package webonise.mapboxdemo;
+package webonise.mapboxdemo.view;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import webonise.mapboxdemo.R;
 import webonise.mapboxdemo.controller.SimulationController;
 import webonise.mapboxdemo.utilities.FileUtil;
 import webonise.mapboxdemo.utilities.PermissionUtil;
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final List<LatLng> latLngPolygon = new ArrayList<>();
     private LatLng myLoc = new LatLng();
     private boolean hasFileWritePermission;
-
     {
         myLoc.setLatitude(18.515600);
         myLoc.setLongitude(73.781900);
@@ -135,6 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void startSimulation() {
         SimulationController simulationController = new SimulationController(this, mapboxMap);
-        simulationController.drawMissionPlan();
+        simulationController.initializeMissionPlan();
     }
 }

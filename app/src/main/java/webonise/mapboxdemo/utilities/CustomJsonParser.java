@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.models.FlightPlanModel;
+import webonise.mapboxdemo.model.FlightPlanModel;
 
 public class CustomJsonParser {
 

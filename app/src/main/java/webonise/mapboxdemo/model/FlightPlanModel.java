@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.models;
+package webonise.mapboxdemo.model;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
@@ -10,6 +10,7 @@ public class FlightPlanModel {
     private LatLng homeLocation;
     private boolean isBufferEnabled;
     private List<LatLng> transectsList;
+    private List<LatLng> droneTail;
 
     public int getType() {
         return type;
@@ -49,5 +50,13 @@ public class FlightPlanModel {
 
     public void setTransectsList(List<LatLng> transectsList) {
         this.transectsList = transectsList;
+    }
+
+    public List<LatLng> getDroneTail() {
+        return droneTail;
+    }
+
+    public void setDroneTail(List<LatLng> droneTail) {
+        this.droneTail = droneTail;
     }
 }
