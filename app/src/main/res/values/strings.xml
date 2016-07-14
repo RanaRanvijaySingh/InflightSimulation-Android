@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">InflightSimulator</string>
     <string name="mapbox_access_token">pk.eyJ1IjoicmFuYTlsb2dhbiIsImEiOiJjaW43MHBnaXkwN2o3dHBseTgxaTBqYXpqIn0.hUoGqwvkMEQwP4nNoqQooQ</string>
-    <string name="b_replay">Replay</string>
+    <string name="b_show_mission">2 - Show mission</string>
 
     <string name="unit_feet">ft</string>
     <string name="unit_meters">m</string>

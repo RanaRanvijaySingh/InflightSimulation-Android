@@ -1,8 +1,8 @@
-package webonise.mapboxdemo.utilities;
+package webonise.logvisualizer.utilities;
 
 import android.app.Activity;
 
-import webonise.mapboxdemo.R;
+import webonise.logvisualizer.R;
 
 
 public class ConversionUtils {

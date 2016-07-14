@@ -1,4 +1,4 @@
-package webonise.mapboxdemo;
+package webonise.logvisualizer;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.controller;
+package webonise.logvisualizer.controller;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -18,9 +18,9 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.R;
-import webonise.mapboxdemo.model.FlightPlanModel;
-import webonise.mapboxdemo.view.MainActivity;
+import webonise.logvisualizer.R;
+import webonise.logvisualizer.model.FlightPlanModel;
+import webonise.logvisualizer.MainActivity;
 
 public class PolygonController {
     public static final int TRANSECT_LINE_WIDTH = 2;
@@ -36,7 +36,7 @@ public class PolygonController {
     private List<LatLng> aoiBuffered = new ArrayList<LatLng>();
     private List<LatLng> transects;
     private Polyline mPolyline;
-    private Marker mHomeMarker;
+    private LatLng mHomeLocation;
 
     public PolygonController(MainActivity activity, MapboxMap mapboxMap) {
         this.mActivity = activity;
@@ -53,8 +53,8 @@ public class PolygonController {
         if (flightPlanModel != null) {
             drawPolygon(flightPlanModel.getPointList(), 0);
             drawTransects(flightPlanModel.getTransectsList());
-            drawDroneIcon(flightPlanModel.getHomeLocation());
-            drawHomeIcon(flightPlanModel.getHomeLocation());
+            mHomeLocation = flightPlanModel.getHomeLocation();
+            drawHomeIcon();
         }
     }
 
@@ -153,33 +153,15 @@ public class PolygonController {
 
     /**
      * Function to draw home icon on the map
-     *
-     * @param homeLocation LatLng
      */
-    private void drawHomeIcon(LatLng homeLocation) {
+    private void drawHomeIcon() {
         final Icon homeIcon = IconFactory.getInstance(mActivity).fromDrawable(
                 mActivity.getResources().getDrawable(R.drawable.homemarker));
         if (mMapboxMap != null) {
             MarkerOptions homeOpts = new MarkerOptions();
-            homeOpts.position(homeLocation);
+            homeOpts.position(mHomeLocation);
             homeOpts.icon(homeIcon);
-            mHomeMarker = mMapboxMap.addMarker(homeOpts);
-        }
-    }
-
-    /**
-     * Function to draw home icon on the map
-     *
-     * @param homeLocation LatLng
-     */
-    private void drawDroneIcon(LatLng homeLocation) {
-        final Icon droneIcon = IconFactory.getInstance(mActivity).fromDrawable(
-                mActivity.getResources().getDrawable(R.drawable.quad_marker));
-        if (mMapboxMap != null) {
-            MarkerOptions droneOpt = new MarkerOptions();
-            droneOpt.position(homeLocation);
-            droneOpt.icon(droneIcon);
-            mHomeMarker = mMapboxMap.addMarker(droneOpt);
+            Marker mHomeMarker = mMapboxMap.addMarker(homeOpts);
         }
     }
 }

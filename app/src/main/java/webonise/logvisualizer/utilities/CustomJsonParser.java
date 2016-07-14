@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.utilities;
+package webonise.logvisualizer.utilities;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.model.FlightPlanModel;
+import webonise.logvisualizer.model.FlightPlanModel;
 
 public class CustomJsonParser {
 

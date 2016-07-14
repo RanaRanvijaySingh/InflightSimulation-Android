@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.controller;
+package webonise.logvisualizer.controller;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -13,7 +13,7 @@ import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.utilities.Constants;
+import webonise.logvisualizer.utilities.Constants;
 
 public class PolygonBufferController {
     private final Activity mActivity;

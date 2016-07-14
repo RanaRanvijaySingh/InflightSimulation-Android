@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.utilities;
+package webonise.logvisualizer.utilities;
 
 import android.content.Context;
 import android.location.Location;

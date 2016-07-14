@@ -1,4 +1,4 @@
-package webonise.mapboxdemo.view;
+package webonise.logvisualizer;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -17,10 +17,10 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.mapboxdemo.R;
-import webonise.mapboxdemo.controller.SimulationController;
-import webonise.mapboxdemo.utilities.FileUtil;
-import webonise.mapboxdemo.utilities.PermissionUtil;
+import webonise.logvisualizer.controller.SimulationController;
+import webonise.logvisualizer.utilities.FileUtil;
+import webonise.logvisualizer.utilities.PermissionUtil;
+import webonise.logvisualizer.view.DroneMarkerView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final List<LatLng> latLngPolygon = new ArrayList<>();
     private LatLng myLoc = new LatLng();
     private boolean hasFileWritePermission;
+    private SimulationController mSimulationController;
+    private DroneMarkerView mDroneView;
+
     {
         myLoc.setLatitude(18.515600);
         myLoc.setLongitude(73.781900);
@@ -111,21 +114,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Function to initialize components
      */
     private void initializeComponents() {
-        Button bReplay = (Button) findViewById(R.id.bReplay);
+        Button bReplay = (Button) findViewById(R.id.bShowMission);
         Button bCreateFile = (Button) findViewById(R.id.bCreateFile);
+        Button bStartMission = (Button) findViewById(R.id.bStartMission);
+        mDroneView = (DroneMarkerView) findViewById(R.id.main_drone_view);
         bReplay.setOnClickListener(this);
         bCreateFile.setOnClickListener(this);
+        bStartMission.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bReplay:
-                startSimulation();
+            case R.id.bShowMission:
+                startShowMission();
                 break;
             case R.id.bCreateFile:
                 FileUtil fileUtil = new FileUtil(this);
                 fileUtil.writeToFile();
+                break;
+            case R.id.bStartMission:
+                startStartMission();
                 break;
         }
     }
@@ -133,8 +142,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Function to start simulation process
      */
-    private void startSimulation() {
-        SimulationController simulationController = new SimulationController(this, mapboxMap);
-        simulationController.initializeMissionPlan();
+    private void startShowMission() {
+        mSimulationController = new SimulationController(this, mapboxMap, mDroneView);
+        mSimulationController.initializeMissionPlan();
+
+    }
+
+    /**
+     * Function to start mission
+     */
+    private void startStartMission() {
+        mSimulationController.runFlightPlan();
     }
 }

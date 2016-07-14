@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".MainActivity">
 
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapview"
@@ -15,15 +15,30 @@
         app:style_url="@string/style_mapbox_streets"/>
 
     <Button
-        android:id="@+id/bReplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/b_replay"/>
-
-    <Button
         android:id="@+id/bCreateFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="Create file"/>
+        android:layout_alignParentLeft="true"
+        android:text="1 - Create file"/>
+
+    <Button
+        android:id="@+id/bShowMission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bCreateFile"
+        android:text="@string/b_show_mission"/>
+
+    <Button
+        android:id="@+id/bStartMission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/bShowMission"
+        android:text="3 - Start mission"/>
+
+    <webonise.logvisualizer.view.DroneMarkerView
+        android:id="@+id/main_drone_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
 </RelativeLayout>
