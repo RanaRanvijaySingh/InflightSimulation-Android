@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import webonise.logvisualizer.model.FlightPlanModel;
+import webonise.logvisualizer.model.FlightLogModel;
 
 public class CustomJsonParser {
 
@@ -23,8 +23,8 @@ public class CustomJsonParser {
      * @param content String
      * @return FlighPlanModel
      */
-    public static FlightPlanModel fromJson(String content) {
-        List<FlightPlanModel> planModelList = new ArrayList<>();
+    public static FlightLogModel fromJson(String content) {
+        List<FlightLogModel> planModelList = new ArrayList<>();
         if (!TextUtils.isEmpty(content)) {
             try {
                 JSONArray jsonArrayContent = new JSONArray(content);
@@ -35,9 +35,9 @@ public class CustomJsonParser {
                     int classType = jsonObjectItem.getInt(Constants.JsonKeys.CLASS_TYPE);
                     Log.i(TAG,"Object class type "+ classType);
                     if (classType == Constants.ClassType.FLIGHT_PLAN) {
-                        FlightPlanModel flightPlanModel = new Gson()
-                                .fromJson(jsonObjectItem.toString(), FlightPlanModel.class);
-                        planModelList.add(flightPlanModel);
+                        FlightLogModel flightLogModel = new Gson()
+                                .fromJson(jsonObjectItem.toString(), FlightLogModel.class);
+                        planModelList.add(flightLogModel);
                         Log.i(TAG,"Flight plan model created and added to list"+ classType);
                     }
                 }

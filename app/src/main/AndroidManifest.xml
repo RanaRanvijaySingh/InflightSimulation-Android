@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="webonise.logvisualizer.MainActivity"
+            android:name=".ImportActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,6 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService"/>
 

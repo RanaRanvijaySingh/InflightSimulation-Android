@@ -4,21 +4,12 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import java.util.List;
 
-public class FlightPlanModel {
-    private int type;
+public class FlightLogModel {
     private List<LatLng> pointList;
     private LatLng homeLocation;
     private boolean isBufferEnabled;
     private List<LatLng> transectsList;
-    private List<LatLng> droneTrail;
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
+    private List<DroneStatusModel> droneStatusModelList;
 
     public List<LatLng> getPointList() {
         return pointList;
@@ -52,11 +43,11 @@ public class FlightPlanModel {
         this.transectsList = transectsList;
     }
 
-    public List<LatLng> getDroneTail() {
-        return droneTrail;
+    public List<DroneStatusModel> getDroneStatusModelList() {
+        return droneStatusModelList;
     }
 
-    public void setDroneTail(List<LatLng> droneTrail) {
-        this.droneTrail = droneTrail;
+    public void setDroneStatusModelList(List<DroneStatusModel> droneStatusModelList) {
+        this.droneStatusModelList = droneStatusModelList;
     }
 }

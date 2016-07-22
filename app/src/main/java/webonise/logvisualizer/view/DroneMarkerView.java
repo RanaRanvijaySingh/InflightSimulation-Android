@@ -16,7 +16,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 
 import webonise.logvisualizer.R;
-import webonise.logvisualizer.MainActivity;
+import webonise.logvisualizer.HomeActivity;
 
 /**
  * Adapted from StackOverflow view example.
@@ -137,11 +137,11 @@ public class DroneMarkerView extends View {
         invalidate();
     }
 
-    private MainActivity getActivity() {
+    private HomeActivity getActivity() {
         Context context = getContext();
         while (context instanceof ContextWrapper) {
-            if (context instanceof MainActivity) {
-                return (MainActivity) context;
+            if (context instanceof HomeActivity) {
+                return (HomeActivity) context;
             }
             context = ((ContextWrapper) context).getBaseContext();
         }

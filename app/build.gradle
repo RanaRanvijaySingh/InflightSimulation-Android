@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 repositories {
@@ -36,4 +39,5 @@ dependencies {
     }
     compile 'com.vividsolutions:jts:1.13'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'org.mockito:mockito-all:2.0.2-beta'
 }

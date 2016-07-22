@@ -12,30 +12,30 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import webonise.logvisualizer.MainActivity;
+import webonise.logvisualizer.HomeActivity;
 import webonise.logvisualizer.R;
-import webonise.logvisualizer.model.FlightPlanModel;
+import webonise.logvisualizer.model.FlightLogModel;
 import webonise.logvisualizer.utilities.FileUtil;
 import webonise.logvisualizer.view.DroneMarkerView;
 
 public class SimulationController {
 
-    private final MainActivity mActivity;
+    private final HomeActivity mActivity;
     private final MapboxMap mMapboxMap;
-    private final FlightPlanModel mFlightPlanModel;
+    private final FlightLogModel mFlightLogModel;
     private MarkerOptions mDroneMarkerOptions;
     private int position = 0;
     Timer timer = new Timer();
     private Marker mDroneMarker;
     private DroneMarkerView mDroneView;
 
-    public SimulationController(MainActivity activity, MapboxMap mapboxMap, DroneMarkerView
+    public SimulationController(HomeActivity activity, MapboxMap mapboxMap, DroneMarkerView
             droneView) {
         this.mActivity = activity;
         this.mMapboxMap = mapboxMap;
         this.mDroneView = droneView;
         FileUtil fileUtil = new FileUtil(mActivity);
-        mFlightPlanModel = fileUtil.getFlightPlanModel();
+        mFlightLogModel = fileUtil.getFlightPlanModel();
     }
 
     /**
@@ -44,9 +44,9 @@ public class SimulationController {
      */
     public void initializeMissionPlan() {
         PolygonController polygonController = new PolygonController(mActivity, mMapboxMap);
-        polygonController.initializeMissionBase(mFlightPlanModel);
-        drawDroneIcon(mFlightPlanModel.getHomeLocation());
-        mDroneView.initMarker(mFlightPlanModel.getDroneTail().get(0), 100);
+        polygonController.initializeMissionBase(mFlightLogModel);
+        drawDroneIcon(mFlightLogModel.getHomeLocation());
+        mDroneView.initMarker(mFlightLogModel.getHomeLocation(), 100);
         mDroneView.setMap(mMapboxMap);
     }
 
@@ -74,7 +74,7 @@ public class SimulationController {
             @Override
             public void run() {
                 Log.i("", "Position : " + position);
-                updateDronePosition(mFlightPlanModel.getDroneTail().get(position));
+//                updateDronePosition(mFlightLogModel.getDroneTail().get(position));
                 position++;
             }
         }, 500, 1000);

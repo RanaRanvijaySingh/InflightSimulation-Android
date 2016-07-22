@@ -22,7 +22,7 @@ import webonise.logvisualizer.utilities.FileUtil;
 import webonise.logvisualizer.utilities.PermissionUtil;
 import webonise.logvisualizer.view.DroneMarkerView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final float ZOOM_DEFAULT = 15.0f;
     private MapboxMap mapboxMap;
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void initMapBox(MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        Toast.makeText(MainActivity.this, "Map box object initialized", Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeActivity.this, "Map box object initialized", Toast.LENGTH_SHORT).show();
         CameraPosition.Builder b = new CameraPosition.Builder();
         b.target(new LatLng(myLoc.getLatitude(), myLoc.getLongitude()));
         b.zoom(ZOOM_DEFAULT);

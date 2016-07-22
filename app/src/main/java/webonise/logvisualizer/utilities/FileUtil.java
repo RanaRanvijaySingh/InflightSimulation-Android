@@ -1,7 +1,10 @@
 package webonise.logvisualizer.utilities;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,8 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import webonise.logvisualizer.MainActivity;
-import webonise.logvisualizer.model.FlightPlanModel;
+import webonise.logvisualizer.model.FlightLogModel;
 
 public class FileUtil {
 
@@ -23,10 +25,10 @@ public class FileUtil {
     private static final String OPEN_ARRAY_BRACES = "[";
     private static final char COMMA = ',';
     private static final String CLOSE_ARRAY_BRACES = "]";
-    private final MainActivity mActivity;
+    private final Activity mActivity;
     private String fileName = "simulatorTest.txt";
 
-    public FileUtil(MainActivity activity) {
+    public FileUtil(Activity activity) {
         this.mActivity = activity;
     }
 
@@ -112,7 +114,7 @@ public class FileUtil {
      *
      * @return FlightPlanModel
      */
-    public FlightPlanModel getFlightPlanModel() {
+    public FlightLogModel getFlightPlanModel() {
         String fileContent = readFromFile();
         Log.i(TAG, fileContent);
         String jsonContent = getJsonContent(fileContent);
@@ -151,5 +153,65 @@ public class FileUtil {
             e.printStackTrace();
         }
         return content;
+    }
+
+
+    /**
+     * Function to check if the file format is correct of not.
+     *
+     * @param uri String
+     * @return boolean
+     */
+    public boolean isCorrectFile(Uri uri) {
+        if (uri != null) {
+            String completeFilePath = UriManager.getPath(uri, mActivity);
+            if (isFileExtensionCorrect(completeFilePath)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Function to check if the file extension is correct or not.
+     * @param completeFilePath String
+     * @return boolean
+     */
+    public boolean isFileExtensionCorrect(String completeFilePath) {
+        if (!TextUtils.isEmpty(completeFilePath)) {
+            if (completeFilePath.contains(Constants.StringValues.DOT)) {
+                int dotPosition = completeFilePath.lastIndexOf(Constants.StringValues.DOT);
+                String fileExtension = completeFilePath.substring(dotPosition).trim();
+                if (fileExtension.equalsIgnoreCase(Constants.SupportedFiles.TXT)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Function to read a file content
+     *
+     * @param uri Uri
+     */
+    public String readFile(Uri uri) {
+        BufferedReader br;
+        StringBuilder stringBuilder = new StringBuilder();
+        if (mActivity != null) {
+            try {
+                br = new BufferedReader(new InputStreamReader(mActivity.getContentResolver()
+                        .openInputStream(uri)));
+                String line;
+                while ((line = br.readLine()) != null) {
+                    stringBuilder.append(line + Constants.StringValues.NEW_LINE);
+                }
+                br.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return stringBuilder.toString();
     }
 }

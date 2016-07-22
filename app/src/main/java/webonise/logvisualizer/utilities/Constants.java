@@ -23,6 +23,7 @@ public class Constants {
     public static final String FILE_LOG = "log-";
     public static final String BUNDLE_CONNECTION_PARCELABLE_OBJECT = "connection_object";
     public static final String MEASUREMENT_UNIT_METERS = "1";
+    public static final String FILE_CONTENT_VALIDATION_CHECK_STRING = "I/MainActivity:";
 
     public class StringValues {
         public static final String SPACE = " ";
@@ -32,6 +33,7 @@ public class Constants {
         public static final String BACKWARD_SLASH_DOUBLE = "\\";
         public static final String COLON = ":";
         public static final String DASH = "-";
+        public static final String NEW_LINE = "\n";
     }
     public static final double DEFAULT_BUFFER_VALUE = 0.000090;
 
@@ -43,4 +45,11 @@ public class Constants {
         public static final String CLASS_TYPE = "type";
     }
 
+    public class FileConstants {
+        public static final String IMPORT_FILE_EXTENSION = "*/*";
+    }
+
+    public class SupportedFiles {
+        public static final String TXT = ".txt";
+    }
 }

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webonise.logvisualizer.R;
-import webonise.logvisualizer.model.FlightPlanModel;
-import webonise.logvisualizer.MainActivity;
+import webonise.logvisualizer.model.FlightLogModel;
+import webonise.logvisualizer.HomeActivity;
 
 public class PolygonController {
     public static final int TRANSECT_LINE_WIDTH = 2;
@@ -28,7 +28,7 @@ public class PolygonController {
     private static final int POLYGON_LINE_WIDTH = 1;
     private static final String TAG = "PolygonController";
     private final MapboxMap mMapboxMap;
-    private final MainActivity mActivity;
+    private final HomeActivity mActivity;
     private Polygon mPolygon;
     private Polyline mPolygonOutline;
     private PolygonBufferController mPolygonBufferController;
@@ -38,7 +38,7 @@ public class PolygonController {
     private Polyline mPolyline;
     private LatLng mHomeLocation;
 
-    public PolygonController(MainActivity activity, MapboxMap mapboxMap) {
+    public PolygonController(HomeActivity activity, MapboxMap mapboxMap) {
         this.mActivity = activity;
         this.mMapboxMap = mapboxMap;
         mPolygonBufferController = new PolygonBufferController(activity);
@@ -46,14 +46,14 @@ public class PolygonController {
 
     /**
      * Function to draw polygon
-     * @param flightPlanModel
+     * @param flightLogModel
      */
-    public void initializeMissionBase(FlightPlanModel flightPlanModel) {
+    public void initializeMissionBase(FlightLogModel flightLogModel) {
         Log.i(TAG, "Polygon point obtained");
-        if (flightPlanModel != null) {
-            drawPolygon(flightPlanModel.getPointList(), 0);
-            drawTransects(flightPlanModel.getTransectsList());
-            mHomeLocation = flightPlanModel.getHomeLocation();
+        if (flightLogModel != null) {
+            drawPolygon(flightLogModel.getPointList(), 0);
+            drawTransects(flightLogModel.getTransectsList());
+            mHomeLocation = flightLogModel.getHomeLocation();
             drawHomeIcon();
         }
     }

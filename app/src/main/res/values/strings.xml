@@ -7,4 +7,10 @@
     <string name="unit_meters">m</string>
     <string name="unit_meters_per_second">m/s</string>
     <string name="unit_miles_per_hour">mph</string>
+    <string name="tv_flight_log_file">flight log file</string>
+    <string name="tv_import">Import</string>
+    <string name="toast_unable_to_pick_up_file">Unable to pick selected file</string>
+    <string name="toast_error_incorrect_file_format">Incorrect file format</string>
+    <string name="toast_invalid_file_content">Invalid file content</string>
+    <string name="toast_success">Success</string>
 </resources>
