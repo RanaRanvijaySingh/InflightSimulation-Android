@@ -15,17 +15,9 @@
         app:style_url="@string/style_mapbox_streets"/>
 
     <Button
-        android:id="@+id/bCreateFile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="1 - Create file"/>
-
-    <Button
         android:id="@+id/bShowMission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bCreateFile"
         android:text="@string/b_show_mission"/>
 
     <Button
@@ -34,11 +26,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/bShowMission"
-        android:text="3 - Start mission"/>
+        android:text="2 - Start mission"/>
 
     <webonise.logvisualizer.view.DroneMarkerView
         android:id="@+id/main_drone_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvDroneAltitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drone_alt"/>
+
+        <TextView
+            android:id="@+id/tvDroneSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drone_speed"/>
+
+        <TextView
+            android:id="@+id/tvMissionTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mission_time"/>
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

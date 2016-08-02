@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">InflightSimulator</string>
     <string name="mapbox_access_token">pk.eyJ1IjoicmFuYTlsb2dhbiIsImEiOiJjaW43MHBnaXkwN2o3dHBseTgxaTBqYXpqIn0.hUoGqwvkMEQwP4nNoqQooQ</string>
-    <string name="b_show_mission">2 - Show mission</string>
+    <string name="b_show_mission">1 - Show mission</string>
 
     <string name="unit_feet">ft</string>
     <string name="unit_meters">m</string>
@@ -13,4 +13,7 @@
     <string name="toast_error_incorrect_file_format">Incorrect file format</string>
     <string name="toast_invalid_file_content">Invalid file content</string>
     <string name="toast_success">Success</string>
+    <string name="drone_alt">Alt : %1$s</string>
+    <string name="drone_speed">Speed : %1$s</string>
+    <string name="mission_time">Time : %1$s</string>
 </resources>

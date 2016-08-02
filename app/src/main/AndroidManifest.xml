@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="landscape"/>
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService"/>
 

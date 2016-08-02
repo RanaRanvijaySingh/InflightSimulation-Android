@@ -16,7 +16,6 @@ import webonise.logvisualizer.view.interfaces.ImportView;
 public class ImportPresenter {
     private final ImportView mImportView;
     private final Activity mActivity;
-    private String mFileContent;
 
     public ImportPresenter(ImportView importView, Activity activity) {
         this.mActivity = activity;
@@ -75,6 +74,7 @@ public class ImportPresenter {
         @Override
         public void onSuccess(FlightLogModel flightLogModel) {
             mImportView.showToast(R.string.toast_success);
+            mImportView.gotoHomePage(flightLogModel);
         }
 
         @Override

@@ -51,7 +51,7 @@ public class PolygonController {
     public void initializeMissionBase(FlightLogModel flightLogModel) {
         Log.i(TAG, "Polygon point obtained");
         if (flightLogModel != null) {
-            drawPolygon(flightLogModel.getPointList(), 0);
+//            drawPolygon(flightLogModel.getPointList(), 0);
             drawTransects(flightLogModel.getTransectsList());
             mHomeLocation = flightLogModel.getHomeLocation();
             drawHomeIcon();

@@ -9,28 +9,35 @@ import webonise.logvisualizer.model.DroneStatusModel;
 import webonise.logvisualizer.model.FlightLogModel;
 
 public class FlightLogParser {
-    private static final String NEW_LINE = "\n";
-    private List<LatLng> mTransectsList;
 
     public FlightLogModel getFlightLogModel(String fileContent) {
+        FlightLogModel flightLogModel = new FlightLogModel();
+        List<LatLng> transectsList = new ArrayList<>();
+        List<DroneStatusModel> statusModelList = new ArrayList<>();
+        String[] lines = fileContent.split(Strings.NEW_LINE);
         try {
-            mTransectsList = new ArrayList<>();
-            String[] lines = fileContent.split(NEW_LINE);
-            for (int i = 0; i < lines.length; i++) {
-                String line = lines[i];
-                if (line.contains(LogKeys.WAYPOINT)) {
-                    LatLng waypoint = getLatLngPointFromLine(line);
+            for (int i = 0; i < lines.length - 1; i++) {
+                String firstLine = lines[i];
+                String secondLine = lines[i + 1];
+                if (secondLine.contains(LogKeys.WAYPOINT)) {
+                    LatLng waypoint = getLatLngPointFromLine(secondLine);
                     if (waypoint != null) {
-                        mTransectsList.add(waypoint);
+                        transectsList.add(waypoint);
                     }
-                } else if (line.contains(LogKeys.LOCATION)) {
-                    parseLocationLine(line);
+                } else if (firstLine.contains(LogKeys.BATTERY)
+                        && secondLine.contains(LogKeys.LOCATION)) {
+                    DroneStatusModel droneStatusModel = parseLocationLine(secondLine);
+                    droneStatusModel.setBatteryPercentage(parseBatteryLine(firstLine));
+                    statusModelList.add(droneStatusModel);
                 }
             }
+            flightLogModel.setTransectsList(transectsList);
+            flightLogModel.setDroneStatusModelList(statusModelList);
+            flightLogModel.setHomeLocation(statusModelList.get(0).getLocation());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return flightLogModel;
     }
 
     /**
@@ -268,6 +275,28 @@ public class FlightLogParser {
         return 0;
     }
 
+    /**
+     * Function to get Battery percentage from given line
+     * Extract : 84
+     * From : 07-19 04:33:05.482 PM I/MainActivity: battery: 84%
+     *
+     * @param line String
+     * @return int
+     */
+    public int parseBatteryLine(String line) {
+        if (line == null || line.equals(Constants.StringValues.BLANK)) {
+            return 0;
+        }
+        try {
+            String batteryPercentage = line.substring(line.indexOf(LogKeys.BATTERY) + LogKeys
+                    .BATTERY.length(), line.length() - 1);
+            return Integer.parseInt(batteryPercentage.trim());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private class LogKeys {
         public static final String WAYPOINT = "Waypoint";
         public static final String LOCATION = "location";
@@ -276,7 +305,7 @@ public class FlightLogParser {
         public static final String SATELLITE_COUNT = "satCount:";
         public static final String VELOCITY = "velocity:";
         public static final String LOCATION_START = "location:(";
-        public static final String BATTERY = "battery";
+        public static final String BATTERY = "battery:";
         public static final String TIME_END = " I/";
     }
 
@@ -284,5 +313,6 @@ public class FlightLogParser {
         public static final String OPEN_BRACES = "(";
         public static final String CLOSE_BRACES = ")";
         public static final String COMMA = ",";
+        public static final String NEW_LINE = "\n";
     }
 }

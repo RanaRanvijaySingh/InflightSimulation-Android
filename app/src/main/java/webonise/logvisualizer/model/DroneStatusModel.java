@@ -1,8 +1,11 @@
 package webonise.logvisualizer.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
-public class DroneStatusModel {
+public class DroneStatusModel implements Parcelable {
     private LatLng location;
     private int batteryPercentage;
     private int satelliteCount;
@@ -75,4 +78,47 @@ public class DroneStatusModel {
     public void setHeading(double heading) {
         this.heading = heading;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.location, flags);
+        dest.writeInt(this.batteryPercentage);
+        dest.writeInt(this.satelliteCount);
+        dest.writeDouble(this.speed);
+        dest.writeDouble(this.altitude);
+        dest.writeDouble(this.heading);
+        dest.writeString(this.alertMessage);
+        dest.writeLong(this.time);
+    }
+
+    public DroneStatusModel() {
+    }
+
+    protected DroneStatusModel(Parcel in) {
+        this.location = in.readParcelable(LatLng.class.getClassLoader());
+        this.batteryPercentage = in.readInt();
+        this.satelliteCount = in.readInt();
+        this.speed = in.readDouble();
+        this.altitude = in.readDouble();
+        this.heading = in.readDouble();
+        this.alertMessage = in.readString();
+        this.time = in.readLong();
+    }
+
+    public static final Parcelable.Creator<DroneStatusModel> CREATOR = new Parcelable.Creator<DroneStatusModel>() {
+        @Override
+        public DroneStatusModel createFromParcel(Parcel source) {
+            return new DroneStatusModel(source);
+        }
+
+        @Override
+        public DroneStatusModel[] newArray(int size) {
+            return new DroneStatusModel[size];
+        }
+    };
 }

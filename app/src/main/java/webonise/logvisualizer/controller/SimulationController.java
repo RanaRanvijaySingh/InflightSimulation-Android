@@ -14,8 +14,9 @@ import java.util.TimerTask;
 
 import webonise.logvisualizer.HomeActivity;
 import webonise.logvisualizer.R;
+import webonise.logvisualizer.interfaces.HomeView;
+import webonise.logvisualizer.model.DroneStatusModel;
 import webonise.logvisualizer.model.FlightLogModel;
-import webonise.logvisualizer.utilities.FileUtil;
 import webonise.logvisualizer.view.DroneMarkerView;
 
 public class SimulationController {
@@ -28,14 +29,16 @@ public class SimulationController {
     Timer timer = new Timer();
     private Marker mDroneMarker;
     private DroneMarkerView mDroneView;
+    private HomeView mHomeView;
 
     public SimulationController(HomeActivity activity, MapboxMap mapboxMap, DroneMarkerView
-            droneView) {
+            droneView, FlightLogModel flightLogModel, HomeView homeView) {
         this.mActivity = activity;
         this.mMapboxMap = mapboxMap;
         this.mDroneView = droneView;
-        FileUtil fileUtil = new FileUtil(mActivity);
-        mFlightLogModel = fileUtil.getFlightPlanModel();
+//        FileUtil fileUtil = new FileUtil(mActivity);
+        this.mFlightLogModel = flightLogModel;
+        this.mHomeView = homeView;
     }
 
     /**
@@ -74,21 +77,25 @@ public class SimulationController {
             @Override
             public void run() {
                 Log.i("", "Position : " + position);
-//                updateDronePosition(mFlightLogModel.getDroneTail().get(position));
+                if (position < mFlightLogModel.getDroneStatusModelList().size()) {
+                    updateDroneStatus(mFlightLogModel.getDroneStatusModelList().get(position));
+                }
                 position++;
             }
         }, 500, 1000);
     }
 
-    private void updateDronePosition(final LatLng latLng) {
+    private void updateDroneStatus(final DroneStatusModel droneStatusModel) {
         if (mMapboxMap != null) {
-            mDroneMarkerOptions.position(latLng);
-            mDroneMarker.setPosition(latLng);
+            mDroneMarkerOptions.position(droneStatusModel.getLocation());
+            mDroneMarker.setPosition(droneStatusModel.getLocation());
             mMapboxMap.invalidate();
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mDroneView.moveBall(latLng, 100);
+                    mDroneView.moveBall(droneStatusModel.getLocation(),
+                            (int) droneStatusModel.getHeading());
+                    mHomeView.updateDroneInfo(droneStatusModel);
                 }
             });
         }

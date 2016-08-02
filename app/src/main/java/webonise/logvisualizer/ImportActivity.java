@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import webonise.logvisualizer.model.FlightLogModel;
 import webonise.logvisualizer.presenter.ImportPresenter;
 import webonise.logvisualizer.utilities.Constants;
 import webonise.logvisualizer.view.interfaces.ImportView;
@@ -63,5 +64,12 @@ public class ImportActivity extends AppCompatActivity implements ImportView {
     @Override
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void gotoHomePage(FlightLogModel flightLogModel) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra(Constants.IntentKeys.FLIGHT_PLAN_MODEL, flightLogModel);
+        startActivity(intent);
     }
 }

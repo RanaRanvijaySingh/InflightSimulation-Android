@@ -179,7 +179,17 @@ public class FlightLogParserTest {
     public void testGetSpeedFromLineForValidData() throws Exception {
         String line = "07-29 09:58:34.126 PM I/MainActivity: location:(18.510916725279202,73" +
                 ".7773856089833) alt:50.2 heading:-31.8 satCount:10.0 velocity:(1.9,-1.2,0.0)";
-        double actualTimeInMilliseconds = flightLogParser.getSpeedFromLine(line);
-        Assert.assertEquals(2.247220505424423, actualTimeInMilliseconds,0);
+        double actualSpeed = flightLogParser.getSpeedFromLine(line);
+        Assert.assertEquals(2.247220505424423, actualSpeed, 0);
+    }
+
+    /**
+     * parseBatteryLine function test ========================================
+     */
+    @Test
+    public void testParseBatteryLineForValidData() throws Exception {
+        String line = "07-19 04:33:05.482 PM I/MainActivity: battery: 84%";
+        int actualBatteryPercentage = flightLogParser.parseBatteryLine(line);
+        Assert.assertEquals(84, actualBatteryPercentage);
     }
 }

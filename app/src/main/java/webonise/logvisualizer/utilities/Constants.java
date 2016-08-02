@@ -52,4 +52,8 @@ public class Constants {
     public class SupportedFiles {
         public static final String TXT = ".txt";
     }
+
+    public class IntentKeys {
+        public static final String FLIGHT_PLAN_MODEL = "flight_plan_model";
+    }
 }
