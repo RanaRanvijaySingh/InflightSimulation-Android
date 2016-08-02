@@ -8,6 +8,7 @@ public class DroneStatusModel {
     private int satelliteCount;
     private double speed;
     private double altitude;
+    private double heading;
     private String alertMessage;
     private long time;
 
@@ -65,5 +66,13 @@ public class DroneStatusModel {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public double getHeading() {
+        return heading;
+    }
+
+    public void setHeading(double heading) {
+        this.heading = heading;
     }
 }
